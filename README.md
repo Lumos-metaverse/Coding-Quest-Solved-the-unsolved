@@ -1,7 +1,6 @@
-# Coding-Quest-Solved-the-unsolved
-Welcome to Coding Quests
+# Coding-Quest-Solved
 
-Instructions on Coding Quests: 
+Task
 1. Fork the repository - {link to github}  
   forked!
 2. Scout the code for errors and solve them  
