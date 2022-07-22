@@ -63,12 +63,12 @@ contract QKCToken is ERC20Interface, SafeMath {
         name = "QuikNode Coin";
         decimals = 2;
         _totalSupply = 100000;
-        balances[YOUR_METAMASK_WALLET_ADDRESS] = _totalSupply;
-        emit Transfer(address(0), YOUR_METAMASK_WALLET_ADDRESS, _totalSupply);
+        balances[msg.sender] = _totalSupply;
+        emit Transfer(address(0), msg.sender, _totalSupply);
     }
  
     function totalSupply() public constant returns (uint) {
-        return _totalSupply  - balances[address(0)];
+        return _totalSupply;
     }
  
     function balanceOf(address tokenOwner) public constant returns (uint balance) {
@@ -76,6 +76,8 @@ contract QKCToken is ERC20Interface, SafeMath {
     }
  
     function transfer(address to, uint tokens) public returns (bool success) {
+        uint256 bOf = balances[msg.sender];
+        require(bOf >= tokens, "amount exceeds balance");
         balances[msg.sender] = safeSub(balances[msg.sender], tokens);
         balances[to] = safeAdd(balances[to], tokens);
         emit Transfer(msg.sender, to, tokens);
@@ -83,6 +85,8 @@ contract QKCToken is ERC20Interface, SafeMath {
     }
  
     function approve(address spender, uint tokens) public returns (bool success) {
+        require(msg.sender != address(0), "zero address");
+        require(spender != address(0), "zero address");
         allowed[msg.sender][spender] = tokens;
         emit Approval(msg.sender, spender, tokens);
         return true;
