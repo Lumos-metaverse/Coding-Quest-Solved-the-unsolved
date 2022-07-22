@@ -63,8 +63,8 @@ contract QKCToken is ERC20Interface, SafeMath {
         name = "QuikNode Coin";
         decimals = 2;
         _totalSupply = 100000;
-        balances[YOUR_METAMASK_WALLET_ADDRESS] = _totalSupply;
-        emit Transfer(address(0), YOUR_METAMASK_WALLET_ADDRESS, _totalSupply);
+        balances[msg.sender] = _totalSupply; //Replacing YOUR_METAMASK_WALLET_ADDRESS with msg.sender
+        emit Transfer(address(0), msg.sender, _totalSupply); //Replacing YOUR_METAMASK_WALLET_ADDRESS with msg.sender
     }
  
     function totalSupply() public constant returns (uint) {
@@ -100,12 +100,15 @@ contract QKCToken is ERC20Interface, SafeMath {
         return allowed[tokenOwner][spender];
     }
  
-    function approveAndCall(address spender, uint tokens, bytes data) public returns (bool success) {
-        allowed[msg.sender][spender] = tokens;
-        emit Approval(msg.sender, spender, tokens);
-        ApproveAndCallFallBack(spender).receiveApproval(msg.sender, tokens, this, data);
-        return true;
-    }
+    //  Commenting out this function, as his function is from ERC827 Token standard which is proven unsafe to use
+    //  It allows the token to execute a function in the receiver contract  after the approval or transfer happens.
+
+    // function approveAndCall(address spender, uint tokens, bytes data) public returns (bool success) {
+    //     allowed[msg.sender][spender] = tokens;
+    //     emit Approval(msg.sender, spender, tokens);
+    //     ApproveAndCallFallBack(spender).receiveApproval(msg.sender, tokens, this, data);
+    //     return true;
+    // }
  
     function () public payable {
         revert();
