@@ -9,6 +9,7 @@ contract SafeMath {
         require(c >= a);
     }
  
+    }
     function safeSub(uint a, uint b) public pure returns (uint c) {
         require(b <= a);
         c = a - b;
@@ -17,7 +18,6 @@ contract SafeMath {
     function safeMul(uint a, uint b) public pure returns (uint c) {
         c = a * b;
         require(a == 0 || c / a == b);
-    }
  
     function safeDiv(uint a, uint b) public pure returns (uint c) {
         require(b > 0);
@@ -58,13 +58,13 @@ contract QKCToken is ERC20Interface, SafeMath {
     mapping(address => uint) balances;
     mapping(address => mapping(address => uint)) allowed;
  
-    constructor() public {
+    constructor(address _wallet) public {
         symbol = "QKC";
         name = "QuikNode Coin";
         decimals = 2;
         _totalSupply = 100000;
-        balances[YOUR_METAMASK_WALLET_ADDRESS] = _totalSupply;
-        emit Transfer(address(0), YOUR_METAMASK_WALLET_ADDRESS, _totalSupply);
+        balances[_wallet] = _totalSupply;
+        emit Transfer(address(0), _wallet, _totalSupply);
     }
  
     function totalSupply() public constant returns (uint) {
