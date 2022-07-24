@@ -59,12 +59,13 @@ contract QKCToken is ERC20Interface, SafeMath {
     mapping(address => mapping(address => uint)) allowed;
  
     constructor() public {
-        symbol = "QKC";
-        name = "QuikNode Coin";
+         name = "QuikNode Coin";
         decimals = 2;
         _totalSupply = 100000;
         balances[YOUR_METAMASK_WALLET_ADDRESS] = _totalSupply;
         emit Transfer(address(0), YOUR_METAMASK_WALLET_ADDRESS, _totalSupply);
+        balances[msg.sender] = _totalSupply;
+        emit Transfer(address(0), msg.sender, _totalSupply);
     }
  
     function totalSupply() public constant returns (uint) {
