@@ -61,10 +61,10 @@ contract QKCToken is ERC20Interface, SafeMath {
     constructor() public {
         symbol = "QKC";
         name = "QuikNode Coin";
-        decimals = 2;
+        decimals = 18; //Good practice to keep it to 18 Decimal Places.
         _totalSupply = 100000;
-        balances[YOUR_METAMASK_WALLET_ADDRESS] = _totalSupply;
-        emit Transfer(address(0), YOUR_METAMASK_WALLET_ADDRESS, _totalSupply);
+        balances[msg.sender] = _totalSupply; //give all the tokens to the deployer of contract 
+        emit Transfer(address(0), msg.sender, _totalSupply);
     }
  
     function totalSupply() public constant returns (uint) {
