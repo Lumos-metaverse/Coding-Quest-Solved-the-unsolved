@@ -1,4 +1,4 @@
-// pragma solidity ^0.4.24;
+pragma solidity ^0.4.24;
  
 //Safe Math Interface
  
@@ -35,10 +35,11 @@ contract ERC20Interface {
     function transfer(address to, uint tokens) public returns (bool success);
     function approve(address spender, uint tokens) public returns (bool success);
     function transferFrom(address from, address to, uint tokens) public returns (bool success);
-
+ 
     event Transfer(address indexed from, address indexed to, uint tokens);
     event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
 }
+ 
  
 //Contract function to receive approval and execute function in one call
  
@@ -62,8 +63,8 @@ contract QKCToken is ERC20Interface, SafeMath {
         name = "QuikNode Coin";
         decimals = 2;
         _totalSupply = 100000;
-        balances[0xE4941765908a77a2A588735d4026909baed993a4] = _totalSupply;
-        emit Transfer(address(0), 0xE4941765908a77a2A588735d4026909baed993a4, _totalSupply);
+        balances[YOUR_METAMASK_WALLET_ADDRESS] = _totalSupply;
+        emit Transfer(address(0), YOUR_METAMASK_WALLET_ADDRESS, _totalSupply);
     }
  
     function totalSupply() public constant returns (uint) {
