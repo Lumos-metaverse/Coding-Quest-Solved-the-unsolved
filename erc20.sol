@@ -4,22 +4,22 @@ pragma solidity ^0.4.24;
  
 contract SafeMath {
  
-    function safeAdd(uint a, uint b) public pure returns (uint c) {
+    function safeAdd(uint a, uint b) internal public pure returns (uint c) {
         c = a + b;
         require(c >= a);
     }
  
-    function safeSub(uint a, uint b) public pure returns (uint c) {
+    function safeSub(uint a, uint b) internal public pure returns (uint c) {
         require(b <= a);
         c = a - b;
     }
  
-    function safeMul(uint a, uint b) public pure returns (uint c) {
+    function safeMul(uint a, uint b) internal public pure returns (uint c) {
         c = a * b;
         require(a == 0 || c / a == b);
     }
  
-    function safeDiv(uint a, uint b) public pure returns (uint c) {
+    function safeDiv(uint a, uint b) internal public pure returns (uint c) {
         require(b > 0);
         c = a / b;
     }
@@ -30,8 +30,8 @@ contract SafeMath {
  
 contract ERC20Interface {
     function totalSupply() public constant returns (uint);
-    function balanceOf(address tokenOwner) public constant returns (uint balance);
-    function allowance(address tokenOwner, address spender) public constant returns (uint remaining);
+    function balanceOf(address tokenOwner) public view returns (uint balance);
+    function allowance(address tokenOwner, address spender) public view returns (uint remaining);
     function transfer(address to, uint tokens) public returns (bool success);
     function approve(address spender, uint tokens) public returns (bool success);
     function transferFrom(address from, address to, uint tokens) public returns (bool success);
@@ -51,7 +51,7 @@ contract ApproveAndCallFallBack {
  
 contract QKCToken is ERC20Interface, SafeMath {
     string public symbol;
-    string public  name;
+    string public name;
     uint8 public decimals;
     uint public _totalSupply;
  
@@ -61,17 +61,17 @@ contract QKCToken is ERC20Interface, SafeMath {
     constructor() public {
         symbol = "QKC";
         name = "QuikNode Coin";
-        decimals = 2;
+        decimals = 18;
         _totalSupply = 100000;
-        balances[YOUR_METAMASK_WALLET_ADDRESS] = _totalSupply;
-        emit Transfer(address(0), YOUR_METAMASK_WALLET_ADDRESS, _totalSupply);
+        balances[msg.sender] = _totalSupply;
+        emit Transfer(address(0), msg.sender, _totalSupply);
     }
  
-    function totalSupply() public constant returns (uint) {
+    function totalSupply() public view returns (uint) {
         return _totalSupply  - balances[address(0)];
     }
  
-    function balanceOf(address tokenOwner) public constant returns (uint balance) {
+    function balanceOf(address tokenOwner) public view returns (uint balance) {
         return balances[tokenOwner];
     }
  
@@ -111,3 +111,7 @@ contract QKCToken is ERC20Interface, SafeMath {
         revert();
     }
 }
+
+
+
+
