@@ -156,7 +156,7 @@ contract QKCToken is ERC20Interface, SafeMath {
         return true;
     }
 
-    function() external {
+    function() external payable {
         revert();
     }
 }
